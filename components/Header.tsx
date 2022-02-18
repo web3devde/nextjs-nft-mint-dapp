@@ -2,9 +2,9 @@ import dynamic from 'next/dynamic';
 import Image from 'next/image';
 import { useEffect } from 'react';
 import { useWeb3React } from '@web3-react/core';
-import Blockies from 'react-blockies';
 import { FaTwitter, FaDiscord, FaShip } from 'react-icons/fa';
 
+import Blockies from './Blockies';
 import ConnectButton from './ConnectButton';
 import Container from './Container';
 import NextLink from './NextLink';
