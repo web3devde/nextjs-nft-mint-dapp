@@ -8,29 +8,29 @@ The actual dApp is here: [Skulls In Love](https://www.skullsin.love/)
 
 ## Usage
 
-### 1 . Clone this project
+1 . Clone this project:
 
 ```sh
 git clone https://github.com/kjmczk/nextjs-nft-mint-dapp.git
 ```
 
-### 2 . Change into the directory
+2 . Change into the directory:
 
 ```sh
 cd nextjs-nft-mint-dapp
 ```
 
-### 3 . Install the dependencies
+3 . Install the dependencies:
 
 ```sh
 npm install
 ```
 
-### 4 . Get Infura API key
+4 . Get Infura API key:
 
 https://infura.io/
 
-### 5 . Copy the `.env.local.example` file to `.env.local`
+5 . Copy the `.env.local.example` file to `.env.local`:
 
 ```sh
 cp .env.local.example .env.local
@@ -38,19 +38,19 @@ cp .env.local.example .env.local
 
 Then set your Infura KEY (PROJECT ID) to `INFURA_KEY` in `.env.local`.
 
-### 6 . Set up some configurations
+6 . Set up some configurations:
 
 Set the values of environment variables in the `.env.development`, `.env.production`, and `.env` files to yours.
 
 > This dApp is by default using **Rinkeby Testnet** for development and **Polygon Mainnet** for production. If you want to use other networks (**Ethereum Mainnet**, **Polygon Mumbai**, etc.), edit the `utils/constants.ts`, `.env.development` and `.env.production` files.
 
-### 7 . Add your **ABI**
+7 . Add your **ABI**:
 
 Copy your contract **ABI** from the [Remix](https://remix.ethereum.org/) and paste it into `contract/abi.json`.
 
 See the [Remix documentation](https://remix-ide.readthedocs.io/en/latest/run.html) for how to generate an ABI.
 
-### 8 . Run the server
+8 . Run the server:
 
 ```sh
 npm run dev
