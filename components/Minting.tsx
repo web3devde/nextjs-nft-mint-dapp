@@ -6,6 +6,7 @@ import { FaMinusCircle, FaPlusCircle } from 'react-icons/fa';
 
 import ConnectButton from './ConnectButton';
 import { useContractContext } from '../context/Contract';
+import { RPC_URL } from '../utils/constants';
 
 import ABI from '../contract/abi.json';
 
@@ -71,9 +72,7 @@ export default function Minting() {
 
   useEffect(() => {
     async function fetchTotalSupply() {
-      const provider = new ethers.providers.JsonRpcProvider(
-        process.env.NEXT_PUBLIC_RPC
-      );
+      const provider = new ethers.providers.JsonRpcProvider(RPC_URL);
       const contract = new ethers.Contract(
         process.env.NEXT_PUBLIC_CONTRACT_ADDRESS!,
         ABI,
