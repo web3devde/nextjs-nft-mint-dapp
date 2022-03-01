@@ -26,23 +26,25 @@ cd nextjs-nft-mint-dapp
 npm install
 ```
 
-4 . Get Infura API key:
+4 . Set up some configurations:
+
+Set the values of environment variables in the `.env.development`, `.env.production`, and `.env` files to yours.
+
+> This dApp is by default using **Mumbai Testnet** for development and **Polygon Mainnet** for production. If you want to use other networks (**Ethereum Mainnet**, **Rinkeby Testnet**, etc.), edit the `.env.development`, `.env.production` and `utils/constants.ts` files.
+
+> **Mumbai Testnet** and **Polygon Mainnet** can use their public RPCs, but if necessary, you can use dedicated RPC URLs provided by [Infura](https://infura.io/), [Alchemy](https://www.alchemy.com/), etc.
+
+5 . Get Infura API key:
 
 https://infura.io/
 
-5 . Copy the `.env.local.example` file to `.env.local`:
+6 . Copy the `.env.local.example` file to `.env.local`:
 
 ```sh
 cp .env.local.example .env.local
 ```
 
 Then set your Infura KEY (PROJECT ID) to `INFURA_KEY` in `.env.local`.
-
-6 . Set up some configurations:
-
-Set the values of environment variables in the `.env.development`, `.env.production`, and `.env` files to yours.
-
-> This dApp is by default using **Rinkeby Testnet** for development and **Polygon Mainnet** for production. If you want to use other networks (**Ethereum Mainnet**, **Polygon Mumbai**, etc.), edit the `utils/constants.ts`, `.env.development` and `.env.production` files.
 
 7 . Add your **ABI**:
 
