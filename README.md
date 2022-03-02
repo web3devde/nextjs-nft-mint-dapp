@@ -30,29 +30,27 @@ npm install
 
 Set the values of environment variables in the `.env.development`, `.env.production`, and `.env` files to yours.
 
-> This dApp is by default using **Mumbai Testnet** for development and **Polygon Mainnet** for production. If you want to use other networks (**Ethereum Mainnet**, **Rinkeby Testnet**, etc.), edit the `.env.development`, `.env.production` and `utils/constants.ts` files.
+> This dApp is by default using **Mumbai Testnet** for development and **Polygon Mainnet** for production. If you want to use other networks (**Ethereum Mainnet**, **Rinkeby Testnet**, etc.), edit the `.env.development`, `.env.production` and `utils/constants.ts` files. Then follow the steps below to set your [Infura](https://infura.io/) key.
+> 
+> 1 . Get Infura API key: https://infura.io/
+> 
+> 2 . Copy the `.env.local.example` file to `.env.local`:
+> 
+> ```sh
+> cp .env.local.example .env.local
+> ```
+> 
+> 3 . Set your Infura KEY (PROJECT ID) to `INFURA_KEY` in `.env.local`
 
-> **Mumbai Testnet** and **Polygon Mainnet** can use their public RPCs, but if necessary, you can use dedicated RPC URLs provided by [Infura](https://infura.io/), [Alchemy](https://www.alchemy.com/), etc.
+> **Mumbai Testnet** and **Polygon Mainnet** can use their public RPCs, but if necessary, you can also use the dedicated RPC URLs by getting your Infura key as above.
 
-5 . Get Infura API key:
-
-https://infura.io/
-
-6 . Copy the `.env.local.example` file to `.env.local`:
-
-```sh
-cp .env.local.example .env.local
-```
-
-Then set your Infura KEY (PROJECT ID) to `INFURA_KEY` in `.env.local`.
-
-7 . Add your **ABI**:
+5 . Add your **ABI**:
 
 Copy your contract **ABI** from the [Remix](https://remix.ethereum.org/) and paste it into `contract/abi.json`.
 
 See the [Remix documentation](https://remix-ide.readthedocs.io/en/latest/run.html) for how to generate an ABI.
 
-8 . Run the server:
+6 . Run the server:
 
 ```sh
 npm run dev
