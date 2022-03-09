@@ -25,10 +25,6 @@ export default function Team() {
           </span>
         </a>
       </p>
-      <p className="mt-6">
-        Is this dApp useful? I am gladly accepting social tipping at
-        0xBD0aF937F03cb1F2C2233d36d2D7cC91AE9a916b
-      </p>
     </div>
   );
 }
