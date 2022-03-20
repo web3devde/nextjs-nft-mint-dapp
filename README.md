@@ -8,7 +8,7 @@ The actual dApp is here: [Skulls In Love](https://www.skullsin.love/)
 
 ## Required
 
-- MetaMask is installed in your browser
+- [MetaMask](https://metamask.io/) is installed in your browser
 - The networks used in your project are registered in your MetaMask
 
 ## Usage
