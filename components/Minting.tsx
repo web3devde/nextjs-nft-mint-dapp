@@ -6,12 +6,11 @@ import { FaMinusCircle, FaPlusCircle } from 'react-icons/fa';
 
 import ConnectButton from './ConnectButton';
 import { useContractContext } from '../context/Contract';
-import { RPC_URL } from '../utils/constants';
 
 import ABI from '../contract/abi.json';
 
 export default function Minting() {
-  const { chainId, account, active } = useWeb3React();
+  const { account, active } = useWeb3React();
 
   const { message, errMsg, setMessage } = useContractContext();
 
@@ -72,14 +71,14 @@ export default function Minting() {
 
   useEffect(() => {
     async function fetchTotalSupply() {
-      const provider = new ethers.providers.JsonRpcProvider(RPC_URL);
+      const provider = new ethers.providers.Web3Provider(window.ethereum);
+      const signer = provider.getSigner();
       const contract = new ethers.Contract(
         process.env.NEXT_PUBLIC_CONTRACT_ADDRESS!,
         ABI,
-        provider
+        signer
       );
-      const totalSupply = await contract.totalSupply();
-      setTotalSupply(totalSupply.toString());
+      setTotalSupply((await contract.totalSupply()).toString());
     }
     fetchTotalSupply();
   }, []);
