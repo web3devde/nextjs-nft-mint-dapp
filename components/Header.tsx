@@ -28,12 +28,10 @@ export default function Header() {
         await activate(injected);
       }
     }
-    if (typeof window.ethereum !== 'undefined') {
-      try {
-        loadInjectedWallet();
-      } catch (error) {
-        if (error instanceof Error) setError(error);
-      }
+    try {
+      loadInjectedWallet();
+    } catch (error) {
+      if (error instanceof Error) setError(error);
     }
   }, [activate, setError]);
 
