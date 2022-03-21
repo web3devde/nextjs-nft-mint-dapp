@@ -1,3 +1,4 @@
+import detectEthereumProvider from '@metamask/detect-provider';
 import { useWeb3React } from '@web3-react/core';
 import { FaWallet } from 'react-icons/fa';
 
@@ -5,12 +6,14 @@ import { useContractContext } from '../context/Contract';
 import { injected } from '../utils/wallet/connectors';
 
 export default function ConnectButton() {
-  const { activate, setError, chainId, error } = useWeb3React();
+  const { activate, setError, chainId } = useWeb3React();
 
   const { isConnecting, setErrMsg, setIsConnecting } = useContractContext();
 
   async function connectMetaMask() {
-    if (typeof window.ethereum !== 'undefined') {
+    const provider = await detectEthereumProvider();
+
+    if (provider) {
       setIsConnecting(true);
       try {
         await activate(injected);

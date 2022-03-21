@@ -1,4 +1,6 @@
 import { useEffect, useState } from 'react';
+import type { ExternalProvider } from '@ethersproject/providers';
+import detectEthereumProvider from '@metamask/detect-provider';
 import { useWeb3React } from '@web3-react/core';
 import { ethers } from 'ethers';
 import { IconContext } from 'react-icons';
@@ -10,7 +12,7 @@ import { useContractContext } from '../context/Contract';
 import ABI from '../contract/abi.json';
 
 export default function Minting() {
-  const { account, active } = useWeb3React();
+  const { account, active, chainId } = useWeb3React();
 
   const { message, errMsg, setMessage } = useContractContext();
 
@@ -28,8 +30,9 @@ export default function Minting() {
       setMessage('');
       setIsPending(true);
       try {
-        const provider = new ethers.providers.Web3Provider(window.ethereum);
-        const signer = provider.getSigner();
+        const provider = (await detectEthereumProvider()) as ExternalProvider;
+        const web3Provider = new ethers.providers.Web3Provider(provider);
+        const signer = web3Provider.getSigner();
         const contract = new ethers.Contract(
           process.env.NEXT_PUBLIC_CONTRACT_ADDRESS!,
           ABI,
@@ -71,8 +74,9 @@ export default function Minting() {
 
   useEffect(() => {
     async function fetchTotalSupply() {
-      const provider = new ethers.providers.Web3Provider(window.ethereum);
-      const signer = provider.getSigner();
+      const provider = (await detectEthereumProvider()) as ExternalProvider;
+      const web3Provider = new ethers.providers.Web3Provider(provider);
+      const signer = web3Provider.getSigner();
       const contract = new ethers.Contract(
         process.env.NEXT_PUBLIC_CONTRACT_ADDRESS!,
         ABI,
@@ -80,8 +84,16 @@ export default function Minting() {
       );
       setTotalSupply((await contract.totalSupply()).toString());
     }
-    fetchTotalSupply();
-  }, []);
+
+    if (chainId && chainId.toString() === process.env.NEXT_PUBLIC_NETWORK_ID) {
+      fetchTotalSupply();
+
+      // cleanup
+      return () => {
+        setTotalSupply('?');
+      };
+    }
+  }, [chainId]);
 
   return (
     <>
