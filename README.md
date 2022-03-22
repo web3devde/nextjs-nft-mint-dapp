@@ -57,3 +57,6 @@ Check out the [Next.js deployment documentation](https://nextjs.org/docs/deploym
 
 > If you deploy to a hosting provider other than Vercel, I cannot guarantee that this dApp will work properly.
 
+## Connect MetaMask Mobile
+
+To connect MetaMask on mobile, use the MetaMask mobile browser.
