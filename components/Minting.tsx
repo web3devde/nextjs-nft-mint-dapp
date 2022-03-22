@@ -1,15 +1,15 @@
 import { useEffect, useState } from 'react';
-import type { ExternalProvider } from '@ethersproject/providers';
-import detectEthereumProvider from '@metamask/detect-provider';
 import { useWeb3React } from '@web3-react/core';
 import { ethers } from 'ethers';
 import { IconContext } from 'react-icons';
 import { FaMinusCircle, FaPlusCircle } from 'react-icons/fa';
 
+import { useEthereumProvider } from '../hooks/useEthereumProvider';
 import ABI from '../contract/abi.json';
 
 export default function Minting() {
   const { account, active, chainId } = useWeb3React();
+  const { ethereumProvider } = useEthereumProvider();
 
   const [message, setMessage] = useState('');
   const [connErrMsg, setConnErrMsg] = useState('');
@@ -19,7 +19,7 @@ export default function Minting() {
   const [mintAmount, setMintAmount] = useState(1);
 
   async function claimNFTs() {
-    if (active && account) {
+    if (account && ethereumProvider) {
       const cost = process.env.NEXT_PUBLIC_WEI_COST;
       const gasLimit = process.env.NEXT_PUBLIC_GAS_LIMIT;
       const totalCostWei = (Number(cost) * mintAmount).toString();
@@ -27,8 +27,9 @@ export default function Minting() {
       setMessage('');
       setIsPending(true);
       try {
-        const provider = (await detectEthereumProvider()) as ExternalProvider;
-        const web3Provider = new ethers.providers.Web3Provider(provider);
+        const web3Provider = new ethers.providers.Web3Provider(
+          ethereumProvider
+        );
         const signer = web3Provider.getSigner();
         const contract = new ethers.Contract(
           process.env.NEXT_PUBLIC_CONTRACT_ADDRESS!,
@@ -89,8 +90,7 @@ export default function Minting() {
 
   useEffect(() => {
     async function fetchTotalSupply() {
-      const provider = (await detectEthereumProvider()) as ExternalProvider;
-      const web3Provider = new ethers.providers.Web3Provider(provider);
+      const web3Provider = new ethers.providers.Web3Provider(ethereumProvider!);
       const signer = web3Provider.getSigner();
       const contract = new ethers.Contract(
         process.env.NEXT_PUBLIC_CONTRACT_ADDRESS!,
@@ -100,15 +100,16 @@ export default function Minting() {
       setTotalSupply((await contract.totalSupply()).toString());
     }
 
-    if (chainId && chainId.toString() === process.env.NEXT_PUBLIC_NETWORK_ID) {
+    if (
+      ethereumProvider &&
+      chainId?.toString() === process.env.NEXT_PUBLIC_NETWORK_ID
+    ) {
       fetchTotalSupply();
 
       // cleanup
-      return () => {
-        setTotalSupply('?');
-      };
+      return () => setTotalSupply('?');
     }
-  }, [chainId]);
+  }, [chainId, ethereumProvider]);
 
   return (
     <>
