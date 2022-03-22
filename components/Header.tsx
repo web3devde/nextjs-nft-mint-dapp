@@ -2,13 +2,13 @@ import dynamic from 'next/dynamic';
 import Image from 'next/image';
 import { useEffect } from 'react';
 import { useWeb3React } from '@web3-react/core';
-import { FaTwitter, FaDiscord, FaShip } from 'react-icons/fa';
+import { FaTwitter, FaDiscord, FaShip, FaTimesCircle } from 'react-icons/fa';
 
 import Blockies from './Blockies';
 import ConnectButton from './ConnectButton';
 import Container from './Container';
 import NextLink from './NextLink';
-import { useContractContext } from '../context/Contract';
+import { useMessageContext } from '../context/Message';
 import { injected } from '../utils/wallet/connectors';
 import Logo from '../public/assets/logo.png';
 
@@ -17,9 +17,9 @@ const ReactTooltip = dynamic(() => import('react-tooltip'), {
 });
 
 export default function Header() {
-  const { activate, setError, chainId, account, active } = useWeb3React();
+  const { activate, setError, account, active } = useWeb3React();
 
-  const { errMsg, setErrMsg } = useContractContext();
+  const { errorMessage, setErrorMessage } = useMessageContext();
 
   useEffect(() => {
     async function loadInjectedWallet() {
@@ -34,23 +34,6 @@ export default function Header() {
       if (error instanceof Error) setError(error);
     }
   }, [activate, setError]);
-
-  useEffect(() => {
-    if (active) {
-      if (
-        chainId &&
-        chainId.toString() !== process.env.NEXT_PUBLIC_NETWORK_ID
-      ) {
-        setErrMsg(
-          `Change the network to ${process.env.NEXT_PUBLIC_NETWORK_ID}.`
-        );
-      } else {
-        setErrMsg('');
-      }
-    } else {
-      setErrMsg('');
-    }
-  }, [active, chainId, setErrMsg]);
 
   return (
     <div className="sticky top-0 z-50">
@@ -136,7 +119,18 @@ export default function Header() {
         </Container>
       </header>
 
-      {errMsg && <div className="bg-red-400 p-4 text-center">{errMsg}</div>}
+      {errorMessage && (
+        <div className="flex justify-center items-center bg-red-400 p-4 text-center text-gray-100">
+          <span className="flex-1">{errorMessage}</span>
+          <button
+            type="button"
+            className="flex-none"
+            onClick={() => setErrorMessage('')}
+          >
+            <FaTimesCircle />
+          </button>
+        </div>
+      )}
     </div>
   );
 }
