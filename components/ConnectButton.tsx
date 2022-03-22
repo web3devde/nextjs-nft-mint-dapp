@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { FaWallet } from 'react-icons/fa';
 import { useWeb3React } from '@web3-react/core';
 import detectEthereumProvider from '@metamask/detect-provider';
@@ -11,14 +11,12 @@ export default function ConnectButton() {
 
   const { setErrorMessage } = useMessageContext();
 
+  const [isMetaMask, setIsMetaMask] = useState(false);
   const [isConnecting, setIsConnecting] = useState(false);
 
   async function connectMetaMask() {
-    setIsConnecting(true);
-
-    const provider = await detectEthereumProvider();
-
-    if (provider) {
+    if (isMetaMask) {
+      setIsConnecting(true);
       try {
         await activate(injected);
         setIsConnecting(false);
@@ -28,9 +26,22 @@ export default function ConnectButton() {
       }
     } else {
       setErrorMessage('Please install MetaMask.');
-      setIsConnecting(false);
     }
   }
+
+  useEffect(() => {
+    async function checkMetaMask() {
+      const provider = await detectEthereumProvider();
+      if (provider === window.ethereum) {
+        setIsMetaMask(!!provider);
+      }
+    }
+
+    checkMetaMask();
+
+    // cleanup
+    return () => setIsMetaMask(false);
+  }, []);
 
   return (
     <div className="flex justify-center">
