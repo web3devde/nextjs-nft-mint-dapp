@@ -1,37 +1,34 @@
-import detectEthereumProvider from '@metamask/detect-provider';
-import { useWeb3React } from '@web3-react/core';
+import { useState } from 'react';
 import { FaWallet } from 'react-icons/fa';
+import { useWeb3React } from '@web3-react/core';
+import detectEthereumProvider from '@metamask/detect-provider';
 
-import { useContractContext } from '../context/Contract';
+import { useMessageContext } from '../context/Message';
 import { injected } from '../utils/wallet/connectors';
 
 export default function ConnectButton() {
-  const { activate, setError, chainId } = useWeb3React();
+  const { activate, setError } = useWeb3React();
 
-  const { isConnecting, setErrMsg, setIsConnecting } = useContractContext();
+  const { setErrorMessage } = useMessageContext();
+
+  const [isConnecting, setIsConnecting] = useState(false);
 
   async function connectMetaMask() {
+    setIsConnecting(true);
+
     const provider = await detectEthereumProvider();
 
     if (provider) {
-      setIsConnecting(true);
       try {
         await activate(injected);
         setIsConnecting(false);
-        if (
-          chainId &&
-          chainId.toString() !== process.env.NEXT_PUBLIC_NETWORK_ID
-        ) {
-          setErrMsg(
-            `Change the network to ${process.env.NEXT_PUBLIC_NETWORK_ID}.`
-          );
-        }
       } catch (error) {
         if (error instanceof Error) setError(error);
         setIsConnecting(false);
       }
     } else {
-      setErrMsg('Please install MetaMask.');
+      setErrorMessage('Please install MetaMask.');
+      setIsConnecting(false);
     }
   }
 
