@@ -2,13 +2,12 @@ import dynamic from 'next/dynamic';
 import Image from 'next/image';
 import { useEffect } from 'react';
 import { useWeb3React } from '@web3-react/core';
-import { FaTwitter, FaDiscord, FaShip, FaTimesCircle } from 'react-icons/fa';
+import { FaTwitter, FaDiscord, FaShip, FaInfinity } from 'react-icons/fa';
 
 import Blockies from './Blockies';
 import ConnectButton from './ConnectButton';
 import Container from './Container';
 import NextLink from './NextLink';
-import { useMessageContext } from '../context/Message';
 import { injected } from '../utils/wallet/connectors';
 import Logo from '../public/assets/logo.png';
 
@@ -18,8 +17,6 @@ const ReactTooltip = dynamic(() => import('react-tooltip'), {
 
 export default function Header() {
   const { activate, setError, account, active } = useWeb3React();
-
-  const { errorMessage, setErrorMessage } = useMessageContext();
 
   useEffect(() => {
     async function loadInjectedWallet() {
@@ -96,6 +93,17 @@ export default function Header() {
               >
                 <FaShip />
               </a>
+              <a
+                href={process.env.NEXT_PUBLIC_SCAN_URL}
+                aria-label={`Contract of ${process.env.NEXT_PUBLIC_NFT_NAME}`}
+                rel="noopener noreferrer"
+                target="_blank"
+                data-tip="PolygonScan"
+                data-for="header"
+                className="bg-gray-700 hover:bg-gray-600 rounded-full p-2"
+              >
+                <FaInfinity />
+              </a>
 
               {active && account ? (
                 <span className="flex items-center space-x-2 p-2 bg-gray-700 rounded-full">
@@ -118,19 +126,6 @@ export default function Header() {
           </div>
         </Container>
       </header>
-
-      {errorMessage && (
-        <div className="flex justify-center items-center bg-red-400 p-4 text-center text-gray-100">
-          <span className="flex-1">{errorMessage}</span>
-          <button
-            type="button"
-            className="flex-none"
-            onClick={() => setErrorMessage('')}
-          >
-            <FaTimesCircle />
-          </button>
-        </div>
-      )}
     </div>
   );
 }
