@@ -1,5 +1,11 @@
 import dynamic from 'next/dynamic';
-import { FaHome, FaTwitter, FaDiscord, FaShip } from 'react-icons/fa';
+import {
+  FaHome,
+  FaTwitter,
+  FaDiscord,
+  FaShip,
+  FaInfinity,
+} from 'react-icons/fa';
 
 import Container from './Container';
 import NextLink from './NextLink';
@@ -68,6 +74,17 @@ export default function Footer() {
               className="bg-gray-700 hover:bg-gray-600 rounded-full p-2"
             >
               <FaShip />
+            </a>
+            <a
+              href={process.env.NEXT_PUBLIC_SCAN_URL}
+              aria-label={`Contract of ${process.env.NEXT_PUBLIC_NFT_NAME}`}
+              rel="noopener noreferrer"
+              target="_blank"
+              data-tip="PolygonScan"
+              data-for="footer"
+              className="bg-gray-700 hover:bg-gray-600 rounded-full p-2"
+            >
+              <FaInfinity />
             </a>
           </div>
         </div>
