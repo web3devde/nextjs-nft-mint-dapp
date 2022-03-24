@@ -1,14 +1,15 @@
 import { useState } from 'react';
+import { useRouter } from 'next/router';
 import { FaWallet } from 'react-icons/fa';
 import { useWeb3React } from '@web3-react/core';
 
-import { useMessageContext } from '../context/Message';
 import { useEthereumProvider } from '../hooks/useEthereumProvider';
 import { injected } from '../utils/wallet/connectors';
 
 export default function ConnectButton() {
+  const router = useRouter();
+
   const { activate, setError } = useWeb3React();
-  const { setErrorMessage } = useMessageContext();
   const { isMetaMask } = useEthereumProvider();
 
   const [isConnecting, setIsConnecting] = useState(false);
@@ -24,7 +25,10 @@ export default function ConnectButton() {
         setIsConnecting(false);
       }
     } else {
-      setErrorMessage('Please install MetaMask.');
+      window.open(
+        `https://metamask.app.link/dapp/${process.env.NEXT_PUBLIC_SITE_DOMAIN}${router.pathname}`,
+        '_ blank'
+      );
     }
   }
 
