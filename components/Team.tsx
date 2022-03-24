@@ -18,11 +18,9 @@ export default function Team() {
           href="https://twitter.com/kjmczk"
           rel="noopener noreferrer"
           target="_blank"
-          className="text-blue-400"
+          className="text-blue-500 hover:text-blue-400"
         >
-          <span className="border-2 border-gray-700 hover:border-gray-600 rounded-full px-4 py-2 bg-gray-900">
-            @kjmczk
-          </span>
+          <span className="bg-gray-900 rounded-full px-4 py-2">@kjmczk</span>
         </a>
       </p>
     </div>
