@@ -3,8 +3,6 @@ import type { AppProps } from 'next/app';
 import { Web3ReactProvider } from '@web3-react/core';
 import { ethers } from 'ethers';
 
-import { MessageProvider } from '../context/Message';
-
 function getLibrary(provider: any) {
   return new ethers.providers.Web3Provider(provider);
 }
@@ -12,9 +10,7 @@ function getLibrary(provider: any) {
 function MyApp({ Component, pageProps }: AppProps) {
   return (
     <Web3ReactProvider getLibrary={getLibrary}>
-      <MessageProvider>
-        <Component {...pageProps} />
-      </MessageProvider>
+      <Component {...pageProps} />
     </Web3ReactProvider>
   );
 }
