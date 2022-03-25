@@ -2,9 +2,7 @@
 
 A simple, fast and modern dApp for minting NFTs.
 
-Just set up some configurations and add your own **ABI**.
-
-The actual dApp is here: [Skulls In Love](https://www.skullsin.love/)
+This dApp is actually used by [Skulls In Love](https://www.skullsin.love/).
 
 ## Required
 
@@ -13,7 +11,7 @@ The actual dApp is here: [Skulls In Love](https://www.skullsin.love/)
 
 ## Usage
 
-1 . Clone this project:
+1 . Clone this repo:
 
 ```sh
 git clone https://github.com/kjmczk/nextjs-nft-mint-dapp.git
@@ -31,15 +29,31 @@ cd nextjs-nft-mint-dapp
 npm install
 ```
 
-4 . Set up some configurations:
+4 . Set up the config file(s):
 
-Set the values of environment variables in the `.env.development`, `.env.production`, and `.env` files to yours.
+Replace the values in the `config/projectConfig.ts` file with yours as needed.
 
-> This dApp is by default using **Mumbai Testnet** for development and **Polygon Mainnet** for production. If you want to use other networks (**Ethereum Mainnet**, **Rinkeby Testnet**, etc.), edit the `.env.development` and `.env.production` files.
+> This dApp is by default using **Mumbai Testnet** for development and **Polygon Mainnet** for production.
+
+> If you want to use other networks (eg **Ethereum Mainnet** and **Rinkeby Testnet**), edit the `config/rpcConfig.ts` file as well. Then follow the steps below to set your [Infura](https://infura.io/) key.
+> 
+> 1 . Get Infura API key: https://infura.io/
+> 
+> 2 . Copy the `.env.local.example` file to `.env.local`:
+> 
+> ```sh
+> cp .env.local.example .env.local
+> ```
+> 
+> 3 . Set your Infura KEY (PROJECT ID) to `NEXT_PUBLIC_INFURA_KEY` in `.env.local`
+> 
+> NOTE: I highly recommend setting some allowlists on the Infura dashboard to keep your Infura key secure. See the Infura doc "[Use an allowlist](https://docs.infura.io/infura/networks/ethereum/how-to/secure-a-project/use-an-allowlist)"
+
+> **Mumbai Testnet** and **Polygon Mainnet** can use their public RPCs, but if necessary, you can also use the dedicated RPC URLs by getting your Infura key as above.
 
 5 . Add your **ABI**:
 
-Include your contract **ABI** in `contract/abi.json`.
+Include your contract **ABI** in `config/abi.json`.
 
 > If you deployed your contract using [Remix](https://remix.ethereum.org/), see the [Remix documentation](https://remix-ide.readthedocs.io/en/latest/run.html) for how to generate an ABI.
 
@@ -59,4 +73,4 @@ Check out the [Next.js deployment documentation](https://nextjs.org/docs/deploym
 
 ## Connect MetaMask Mobile
 
-To connect MetaMask on mobile, use the MetaMask mobile browser.
+To connect to MetaMask on mobile, install [MetaMask Mobile](https://metamask.io/download/) on your smartphone. You can choose to use it when you want to connect your wallet in your mobile browser. If it is not installed, you will be taken to the installation page for each store.
