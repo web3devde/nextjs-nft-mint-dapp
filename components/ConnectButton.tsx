@@ -3,6 +3,7 @@ import { useRouter } from 'next/router';
 import { FaWallet } from 'react-icons/fa';
 import { useWeb3React } from '@web3-react/core';
 
+import projectConfig from '../config/projectConfig';
 import { useEthereumProvider } from '../hooks/useEthereumProvider';
 import { injected } from '../utils/wallet/connectors';
 
@@ -26,7 +27,7 @@ export default function ConnectButton() {
       }
     } else {
       window.open(
-        `https://metamask.app.link/dapp/${process.env.NEXT_PUBLIC_SITE_DOMAIN}${router.pathname}`,
+        `https://metamask.app.link/dapp/${projectConfig.siteDomain}${router.pathname}`,
         '_ blank'
       );
     }

@@ -1,27 +1,29 @@
 import Head from 'next/head';
 import { useRouter } from 'next/router';
 
+import projectConfig from '../config/projectConfig';
+
 type Props = {
   pageTitle?: string;
 };
 
 const meta = {
-  description: `${process.env.NEXT_PUBLIC_NFT_NAME} is an NFT collection of 10,000 unique characters.`,
+  description: `${projectConfig.nftName} is an NFT collection of 10,000 unique characters.`,
   ogImagePath: '/assets/card-image.png',
 };
 
 export default function Meta({ pageTitle }: Props) {
   const router = useRouter();
-  const ogUrl = process.env.NEXT_PUBLIC_SITE_URL + router.asPath;
+  const ogUrl = projectConfig.siteUrl + router.asPath;
   const ogType = router.pathname === '/' ? 'website' : 'article';
   const ogTitle = pageTitle
     ? pageTitle
     : 'An NFT collection of 10,000 unique characters';
-  const ogImage = process.env.NEXT_PUBLIC_SITE_URL + meta.ogImagePath;
+  const ogImage = projectConfig.siteUrl + meta.ogImagePath;
 
   return (
     <Head>
-      <title>{`${pageTitle} | ${process.env.NEXT_PUBLIC_NFT_NAME}`}</title>
+      <title>{`${pageTitle} | ${projectConfig.nftName}`}</title>
       <link
         rel="apple-touch-icon"
         sizes="180x180"
@@ -53,10 +55,7 @@ export default function Meta({ pageTitle }: Props) {
       <meta name="description" content={meta.description} key="description" />
       <meta property="og:url" content={ogUrl} />
       <meta property="og:type" content={ogType} />
-      <meta
-        property="og:site_name"
-        content={process.env.NEXT_PUBLIC_NFT_NAME}
-      />
+      <meta property="og:site_name" content={projectConfig.nftName} />
       <meta property="og:title" content={ogTitle} />
       <meta
         property="og:description"
@@ -65,10 +64,7 @@ export default function Meta({ pageTitle }: Props) {
       />
       <meta property="og:image" content={ogImage} key="ogImage" />
       <meta name="twitter:card" content="summary_large_image" />
-      <meta
-        name="twitter:site"
-        content={process.env.NEXT_PUBLIC_TWITTER_USERNAME}
-      />
+      <meta name="twitter:site" content={projectConfig.twitterUsername} />
     </Head>
   );
 }

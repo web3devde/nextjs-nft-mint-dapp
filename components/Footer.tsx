@@ -9,6 +9,7 @@ import {
 
 import Container from './Container';
 import NextLink from './NextLink';
+import projectConfig from '../config/projectConfig';
 
 const ReactTooltip = dynamic(() => import('react-tooltip'), {
   ssr: false,
@@ -22,7 +23,7 @@ export default function Footer() {
       <Container>
         <div className="flex flex-col-reverse sm:flex-row justify-between items-center py-8">
           <div>
-            © {getCurrentYear()} {process.env.NEXT_PUBLIC_NFT_NAME}
+            © {getCurrentYear()} {projectConfig.nftName}
           </div>
 
           <div className="flex items-center space-x-2 mb-4 sm:mb-0">
@@ -43,8 +44,8 @@ export default function Footer() {
               <FaHome />
             </NextLink>
             <a
-              href={process.env.NEXT_PUBLIC_TWITTER_URL}
-              aria-label={`${process.env.NEXT_PUBLIC_NFT_NAME} on Twitter`}
+              href={projectConfig.twitterUrl}
+              aria-label={`${projectConfig.nftName} on Twitter`}
               rel="noopener noreferrer"
               target="_blank"
               data-tip="Twitter"
@@ -54,8 +55,8 @@ export default function Footer() {
               <FaTwitter />
             </a>
             <a
-              href={process.env.NEXT_PUBLIC_DISCORD_URL}
-              aria-label={`${process.env.NEXT_PUBLIC_NFT_NAME} on Discord`}
+              href={projectConfig.discordUrl}
+              aria-label={`${projectConfig.nftName} on Discord`}
               rel="noopener noreferrer"
               target="_blank"
               data-tip="Discord"
@@ -65,8 +66,8 @@ export default function Footer() {
               <FaDiscord />
             </a>
             <a
-              href={process.env.NEXT_PUBLIC_OPENSEA_URL}
-              aria-label={`${process.env.NEXT_PUBLIC_NFT_NAME} on OpenSea`}
+              href={projectConfig.openseaCollectionUrl}
+              aria-label={`${projectConfig.nftName} on OpenSea`}
               rel="noopener noreferrer"
               target="_blank"
               data-tip="OpenSea"
@@ -76,8 +77,8 @@ export default function Footer() {
               <FaShip />
             </a>
             <a
-              href={process.env.NEXT_PUBLIC_SCAN_URL}
-              aria-label={`Contract of ${process.env.NEXT_PUBLIC_NFT_NAME}`}
+              href={projectConfig.scanUrl}
+              aria-label={`Contract of ${projectConfig.nftName}`}
               rel="noopener noreferrer"
               target="_blank"
               data-tip="PolygonScan"

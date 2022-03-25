@@ -8,6 +8,7 @@ import Blockies from './Blockies';
 import ConnectButton from './ConnectButton';
 import Container from './Container';
 import NextLink from './NextLink';
+import projectConfig from '../config/projectConfig';
 import { injected } from '../utils/wallet/connectors';
 import Logo from '../public/assets/logo.png';
 
@@ -41,13 +42,13 @@ export default function Header() {
               <span className="flex items-center">
                 <Image
                   src={Logo}
-                  alt={process.env.NEXT_PUBLIC_NFT_NAME}
+                  alt={projectConfig.nftName}
                   width={35}
                   height={35}
                   className="rounded-full"
                 />
                 <span className="hidden sm:block ml-2">
-                  {process.env.NEXT_PUBLIC_NFT_NAME}
+                  {projectConfig.nftName}
                 </span>
               </span>
             </NextLink>
@@ -61,8 +62,8 @@ export default function Header() {
                 textColor="#e2e8f0"
               />
               <a
-                href={process.env.NEXT_PUBLIC_TWITTER_URL}
-                aria-label={`${process.env.NEXT_PUBLIC_NFT_NAME} on Twitter`}
+                href={projectConfig.twitterUrl}
+                aria-label={`${projectConfig.nftName} on Twitter`}
                 rel="noopener noreferrer"
                 target="_blank"
                 data-tip="Twitter"
@@ -72,8 +73,8 @@ export default function Header() {
                 <FaTwitter />
               </a>
               <a
-                href={process.env.NEXT_PUBLIC_DISCORD_URL}
-                aria-label={`${process.env.NEXT_PUBLIC_NFT_NAME} on Discord`}
+                href={projectConfig.discordUrl}
+                aria-label={`${projectConfig.nftName} on Discord`}
                 rel="noopener noreferrer"
                 target="_blank"
                 data-tip="Discord"
@@ -83,8 +84,8 @@ export default function Header() {
                 <FaDiscord />
               </a>
               <a
-                href={process.env.NEXT_PUBLIC_OPENSEA_URL}
-                aria-label={`${process.env.NEXT_PUBLIC_NFT_NAME} on OpenSea`}
+                href={projectConfig.openseaCollectionUrl}
+                aria-label={`${projectConfig.nftName} on OpenSea`}
                 rel="noopener noreferrer"
                 target="_blank"
                 data-tip="OpenSea"
@@ -94,8 +95,8 @@ export default function Header() {
                 <FaShip />
               </a>
               <a
-                href={process.env.NEXT_PUBLIC_SCAN_URL}
-                aria-label={`Contract of ${process.env.NEXT_PUBLIC_NFT_NAME}`}
+                href={projectConfig.scanUrl}
+                aria-label={`Contract of ${projectConfig.nftName}`}
                 rel="noopener noreferrer"
                 target="_blank"
                 data-tip="PolygonScan"
