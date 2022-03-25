@@ -4,8 +4,10 @@ import { ethers } from 'ethers';
 import { IconContext } from 'react-icons';
 import { FaMinusCircle, FaPlusCircle } from 'react-icons/fa';
 
+import ABI from '../config/abi.json';
+import rpcConfig from '../config/rpcConfig';
+import projectConfig from '../config/projectConfig';
 import { useEthereumProvider } from '../hooks/useEthereumProvider';
-import ABI from '../contract/abi.json';
 
 export default function Minting() {
   const { account, active, chainId } = useWeb3React();
@@ -18,16 +20,9 @@ export default function Minting() {
   const [isMinting, setIsMinting] = useState(false);
   const [mintAmount, setMintAmount] = useState(1);
 
-  const networkName =
-    process.env.NODE_ENV === 'production'
-      ? `${process.env.NEXT_PUBLIC_NETWORK_NAME} Mainnet`
-      : `${process.env.NEXT_PUBLIC_NETWORK_NAME} Testnet`;
-
   async function mintNFTs() {
     if (account && ethereumProvider) {
-      const totalMintCost = (
-        Number(process.env.NEXT_PUBLIC_MINT_COST) * mintAmount
-      ).toString();
+      const totalMintCost = (projectConfig.mintCost * mintAmount).toString();
       const totalWei = ethers.utils.parseEther(totalMintCost).toBigInt();
       setMessage('');
       setIsPending(true);
@@ -37,7 +32,7 @@ export default function Minting() {
         );
         const signer = web3Provider.getSigner();
         const contract = new ethers.Contract(
-          process.env.NEXT_PUBLIC_CONTRACT_ADDRESS!,
+          projectConfig.contractAddress,
           ABI,
           signer
         );
@@ -50,7 +45,7 @@ export default function Minting() {
         setIsMinting(false);
         setMessage(
           `Yay! ${mintAmount} ${
-            process.env.NEXT_PUBLIC_NFT_SYMBOL
+            projectConfig.nftSymbol
           } successfully sent to ${account.substring(
             0,
             6
@@ -69,7 +64,7 @@ export default function Minting() {
   }
 
   function incrementMintAmount() {
-    if (mintAmount < Number(process.env.NEXT_PUBLIC_MAX_MINT_AMOUNT_PER_TXN)) {
+    if (mintAmount < projectConfig.maxMintAmountPerTxn) {
       setMintAmount(mintAmount + 1);
     }
   }
@@ -78,36 +73,32 @@ export default function Minting() {
     if (!active) {
       setConnErrMsg('Not connected to your wallet.');
     } else {
-      if (chainId?.toString() !== process.env.NEXT_PUBLIC_CHAIN_ID) {
-        setConnErrMsg(`Change the network to ${networkName}.`);
+      if (chainId !== projectConfig.chainId) {
+        setConnErrMsg(`Change the network to ${projectConfig.networkName}.`);
       } else {
         setConnErrMsg('');
       }
     }
-  }, [active, chainId, networkName]);
+  }, [active, chainId]);
 
   useEffect(() => {
     async function fetchTotalSupply() {
-      const web3Provider = new ethers.providers.Web3Provider(ethereumProvider!);
-      const signer = web3Provider.getSigner();
+      const web3Provider = new ethers.providers.JsonRpcProvider(
+        rpcConfig(process.env.NEXT_PUBLIC_INFURA_KEY)
+      );
       const contract = new ethers.Contract(
-        process.env.NEXT_PUBLIC_CONTRACT_ADDRESS!,
+        projectConfig.contractAddress,
         ABI,
-        signer
+        web3Provider
       );
       setTotalSupply((await contract.totalSupply()).toString());
     }
 
-    if (
-      ethereumProvider &&
-      chainId?.toString() === process.env.NEXT_PUBLIC_CHAIN_ID
-    ) {
-      fetchTotalSupply();
+    fetchTotalSupply();
 
-      // cleanup
-      return () => setTotalSupply('?');
-    }
-  }, [chainId, ethereumProvider]);
+    // cleanup
+    return () => setTotalSupply('?');
+  }, []);
 
   return (
     <>
@@ -115,22 +106,23 @@ export default function Minting() {
 
       <div className="bg-gray-800 border border-t-red-300 border-r-blue-300 border-b-green-300 border-l-yellow-300 rounded p-8 space-y-4">
         <div className="text-3xl font-bold text-center">
-          {totalSupply} / {process.env.NEXT_PUBLIC_MAX_SUPPLY}
+          <span className="text-pink-500">{totalSupply}</span> /{' '}
+          {projectConfig.maxSupply}
         </div>
 
         <div className="text-center">
           <p className="text-xl">
-            Total price:{' '}
-            {Number(process.env.NEXT_PUBLIC_MINT_COST) * mintAmount}
+            Total price: {projectConfig.mintCost * mintAmount}{' '}
+            {projectConfig.chainName}
           </p>
-          <p className="text-sm text-gray-400">(excluding gas fees)</p>
+          <p className="text-gray-400">(excluding gas fees)</p>
         </div>
 
         <div className="flex justify-center items-center space-x-4">
           <IconContext.Provider value={{ size: '1.5em' }}>
             <button
               type="button"
-              className={mintAmount === 1 ? 'text-gray-500 cursor-default' : ''}
+              className={mintAmount <= 1 ? 'text-gray-500 cursor-default' : ''}
               onClick={decrementMintAmount}
               disabled={false}
             >
@@ -140,8 +132,7 @@ export default function Minting() {
             <button
               type="button"
               className={
-                mintAmount ===
-                Number(process.env.NEXT_PUBLIC_MAX_MINT_AMOUNT_PER_TXN)
+                mintAmount >= projectConfig.maxMintAmountPerTxn
                   ? 'text-gray-500 cursor-default'
                   : ''
               }
@@ -216,8 +207,8 @@ export default function Minting() {
 
       <div className="text-gray-400 mt-2">
         Please make sure you are connected to the correct address and the
-        correct network ({networkName}) before purchasing. The operation cannot
-        be undone after purchase.
+        correct network ({projectConfig.networkName}) before purchasing. The
+        operation cannot be undone after purchase.
       </div>
     </>
   );
