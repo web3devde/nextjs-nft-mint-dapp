@@ -2,9 +2,9 @@ import dynamic from 'next/dynamic';
 import Image from 'next/image';
 import { useEffect } from 'react';
 import { useWeb3React } from '@web3-react/core';
+import Jazzicon, { jsNumberForAddress } from 'react-jazzicon';
 import { FaTwitter, FaDiscord, FaShip, FaInfinity } from 'react-icons/fa';
 
-import Blockies from './Blockies';
 import ConnectButton from './ConnectButton';
 import Container from './Container';
 import NextLink from './NextLink';
@@ -108,12 +108,10 @@ export default function Header() {
 
               {active && account ? (
                 <span className="flex items-center space-x-2 p-2 bg-gray-700 rounded-full">
-                  <span>
-                    <Blockies
-                      seed={account.toLowerCase()}
-                      className="rounded-full"
-                    />
-                  </span>
+                  <Jazzicon
+                    diameter={32}
+                    seed={jsNumberForAddress(account.toLowerCase())}
+                  />
                   <span>
                     {`${account.substring(0, 6)}...${account.substring(
                       account.length - 4
