@@ -1,29 +1,26 @@
 import Head from 'next/head';
 import { useRouter } from 'next/router';
 
-import projectConfig from '../config/projectConfig';
+import contractConfig from '../config/contract-config.json';
 
 type Props = {
   pageTitle?: string;
 };
 
-const meta = {
-  description: `${projectConfig.nftName} is an NFT collection of 10,000 unique characters.`,
-  ogImagePath: '/assets/card-image.png',
-};
-
 export default function Meta({ pageTitle }: Props) {
+  const { nftName } = contractConfig;
   const router = useRouter();
-  const ogUrl = projectConfig.siteUrl + router.asPath;
+  const ogUrl = process.env.NEXT_PUBLIC_SITE_URL + router.asPath;
   const ogType = router.pathname === '/' ? 'website' : 'article';
   const ogTitle = pageTitle
     ? pageTitle
     : 'An NFT collection of 10,000 unique characters';
-  const ogImage = projectConfig.siteUrl + meta.ogImagePath;
+  const ogImage = `${process.env.NEXT_PUBLIC_SITE_URL}/assets/card-image.png`;
+  const description = `${nftName} is an NFT collection of 10,000 unique characters.`;
 
   return (
     <Head>
-      <title>{`${pageTitle} | ${projectConfig.nftName}`}</title>
+      <title>{`${pageTitle} | ${nftName}`}</title>
       <link
         rel="apple-touch-icon"
         sizes="180x180"
@@ -52,19 +49,22 @@ export default function Meta({ pageTitle }: Props) {
       <meta name="msapplication-config" content="/favicon/browserconfig.xml" />
       <meta name="theme-color" content="#ffffff" />
       <link rel="alternate" type="application/rss+xml" href="/feed.xml" />
-      <meta name="description" content={meta.description} key="description" />
+      <meta name="description" content={description} key="description" />
       <meta property="og:url" content={ogUrl} />
       <meta property="og:type" content={ogType} />
-      <meta property="og:site_name" content={projectConfig.nftName} />
+      <meta property="og:site_name" content={nftName} />
       <meta property="og:title" content={ogTitle} />
       <meta
         property="og:description"
-        content={meta.description}
+        content={description}
         key="ogDescription"
       />
       <meta property="og:image" content={ogImage} key="ogImage" />
       <meta name="twitter:card" content="summary_large_image" />
-      <meta name="twitter:site" content={projectConfig.twitterUsername} />
+      <meta
+        name="twitter:site"
+        content={process.env.NEXT_PUBLIC_TWITTER_USERNAME}
+      />
     </Head>
   );
 }

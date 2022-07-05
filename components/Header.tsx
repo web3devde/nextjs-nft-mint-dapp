@@ -1,126 +1,82 @@
-import dynamic from 'next/dynamic';
 import Image from 'next/image';
-import { useEffect } from 'react';
-import { useWeb3React } from '@web3-react/core';
-import Jazzicon, { jsNumberForAddress } from 'react-jazzicon';
-import { FaTwitter, FaDiscord, FaShip, FaInfinity } from 'react-icons/fa';
+import { useMoralis } from 'react-moralis';
+import { ConnectButton, Icon } from 'web3uikit';
 
-import ConnectButton from './ConnectButton';
 import Container from './Container';
 import NextLink from './NextLink';
-import projectConfig from '../config/projectConfig';
-import { injected } from '../utils/wallet/connectors';
 import Logo from '../public/assets/logo.png';
-
-const ReactTooltip = dynamic(() => import('react-tooltip'), {
-  ssr: false,
-});
+import contractConfig from '../config/contract-config.json';
+import { parseChainId, getContractAddress } from '../utils/chain';
 
 export default function Header() {
-  const { activate, setError, account, active } = useWeb3React();
-
-  useEffect(() => {
-    async function loadInjectedWallet() {
-      const isAuthorized = await injected.isAuthorized();
-      if (isAuthorized) {
-        await activate(injected);
-      }
-    }
-    try {
-      loadInjectedWallet();
-    } catch (error) {
-      if (error instanceof Error) setError(error);
-    }
-  }, [activate, setError]);
+  const { nftName } = contractConfig;
+  const { chainId: chainIdHex } = useMoralis();
+  const contractAddress = getContractAddress(chainIdHex);
 
   return (
     <div className="sticky top-0 z-50">
-      <header className="bg-gray-900 border-b py-2">
+      <header className="bg-gray-900 border-b py-4">
         <Container>
           <div className="flex justify-between items-center">
             <NextLink href="/" className="text-2xl font-bold text-white">
               <span className="flex items-center">
                 <Image
                   src={Logo}
-                  alt={projectConfig.nftName}
+                  alt={nftName}
                   width={35}
                   height={35}
                   className="rounded-full"
                 />
-                <span className="hidden sm:block ml-2">
-                  {projectConfig.nftName}
-                </span>
+                <span className="hidden md:block ml-2">{nftName}</span>
               </span>
             </NextLink>
 
             <div className="flex items-center space-x-2 ml-2 sm:ml-0">
-              <ReactTooltip
-                id="header"
-                place="bottom"
-                type="dark"
-                effect="solid"
-                textColor="#e2e8f0"
-              />
-              <a
-                href={projectConfig.twitterUrl}
-                aria-label={`${projectConfig.nftName} on Twitter`}
-                rel="noopener noreferrer"
-                target="_blank"
-                data-tip="Twitter"
-                data-for="header"
-                className="bg-gray-700 hover:bg-gray-600 rounded-full p-2"
-              >
-                <FaTwitter />
-              </a>
-              <a
-                href={projectConfig.discordUrl}
-                aria-label={`${projectConfig.nftName} on Discord`}
-                rel="noopener noreferrer"
-                target="_blank"
-                data-tip="Discord"
-                data-for="header"
-                className="bg-gray-700 hover:bg-gray-600 rounded-full p-2"
-              >
-                <FaDiscord />
-              </a>
-              <a
-                href={projectConfig.openseaCollectionUrl}
-                aria-label={`${projectConfig.nftName} on OpenSea`}
-                rel="noopener noreferrer"
-                target="_blank"
-                data-tip="OpenSea"
-                data-for="header"
-                className="bg-gray-700 hover:bg-gray-600 rounded-full p-2"
-              >
-                <FaShip />
-              </a>
-              <a
-                href={projectConfig.scanUrl}
-                aria-label={`Contract of ${projectConfig.nftName}`}
-                rel="noopener noreferrer"
-                target="_blank"
-                data-tip="PolygonScan"
-                data-for="header"
-                className="bg-gray-700 hover:bg-gray-600 rounded-full p-2"
-              >
-                <FaInfinity />
-              </a>
+              <div className="hidden lg:flex space-x-2">
+                <a
+                  href={process.env.NEXT_PUBLIC_OPENSEA_COLLECTION_URL}
+                  aria-label={`${nftName} on OpenSea`}
+                  rel="noopener noreferrer"
+                  target="_blank"
+                  className="bg-gray-700 hover:bg-gray-600 rounded-full p-2"
+                >
+                  <Icon fill="#fff" svg="cart" />
+                </a>
+                <a
+                  href={process.env.NEXT_PUBLIC_DISCORD_URL}
+                  aria-label={`${nftName} on Discord`}
+                  rel="noopener noreferrer"
+                  target="_blank"
+                  className="bg-gray-700 hover:bg-gray-600 rounded-full p-2"
+                >
+                  <Icon fill="#fff" svg="discord" />
+                </a>
+                <a
+                  href={process.env.NEXT_PUBLIC_TWITTER_URL}
+                  aria-label={`${nftName} on Twitter`}
+                  rel="noopener noreferrer"
+                  target="_blank"
+                  className="bg-gray-700 hover:bg-gray-600 rounded-full p-2"
+                >
+                  <Icon fill="#fff" svg="twitter" />
+                </a>
+                <a
+                  href={`${process.env.NEXT_PUBLIC_BLOCK_EXPLORER_URL}${
+                    parseChainId(chainIdHex) !==
+                    process.env.NEXT_PUBLIC_CHAIN_ID!.split(',')[1]
+                      ? `/address/${contractAddress}`
+                      : '/'
+                  }`}
+                  aria-label={`Contract of ${nftName}`}
+                  rel="noopener noreferrer"
+                  target="_blank"
+                  className="bg-gray-700 hover:bg-gray-600 rounded-full p-2"
+                >
+                  <Icon fill="#fff" svg="eth" />
+                </a>
+              </div>
 
-              {active && account ? (
-                <span className="flex items-center space-x-2 p-2 bg-gray-700 rounded-full">
-                  <Jazzicon
-                    diameter={32}
-                    seed={jsNumberForAddress(account.toLowerCase())}
-                  />
-                  <span>
-                    {`${account.substring(0, 6)}...${account.substring(
-                      account.length - 4
-                    )}`}
-                  </span>
-                </span>
-              ) : (
-                <ConnectButton />
-              )}
+              <ConnectButton moralisAuth={false} />
             </div>
           </div>
         </Container>
