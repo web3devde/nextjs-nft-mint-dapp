@@ -61,7 +61,11 @@ npm run dev
 
 ## Deploy your dApp
 
-- [Fleek](https://fleek.co/)
-- [Vercel](https://vercel.com/)
+- [Vercel](https://vercel.com/) - The easiest way to deploy your Next.js app
+- [Fleek](https://fleek.co/) - Deploy your sites & apps on [IPFS](https://ipfs.io/)
+
+> If you're deploying your dApp to Fleek, uncomment Loader Configuration in `next.config.js`.
+
+> Fleek may take some time for the images to appear after deployment.
 
 Check out the [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
