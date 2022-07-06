@@ -2,12 +2,9 @@
 
 A simple, fast and modern dApp for minting NFTs.
 
-This dApp is actually used by [Skulls In Love](https://www.skullsin.love/).
+![Next.js NFT Mint dApp](images/nextjs-nft-mint-dapp.png)
 
-## Required
-
-- [MetaMask](https://metamask.io/) is installed in your browser
-- The networks used in your project are registered in your MetaMask
+> This dApp is designed with the assumption that [Hardhat NFT Smart Contract](https://github.com/kjmczk/hardhat-nft-smart-contract) will be used for the backend. First you need to deploy the smart contract to get the contract address and ABI. Otherwise, the dApp will not work. If you want to use your own smart contract, manually set your contract addresses (`config/contract-config.json`) and ABI (`config/abi.json`). But in that case, it can be complicated because you need to modify the source code of the dApp (some function names, configurations, etc.).
 
 ## Usage
 
@@ -23,54 +20,48 @@ git clone https://github.com/kjmczk/nextjs-nft-mint-dapp.git
 cd nextjs-nft-mint-dapp
 ```
 
-3 . Install the dependencies:
+3 . Install dependencies:
 
 ```sh
 npm install
 ```
 
-4 . Set up the config file(s):
+4 . Set up the env files:
 
-Replace the values in the `config/projectConfig.ts` file with yours as needed.
+Copy the .env(.\*).example files to .env(.\*):
 
-> This dApp is by default using **Mumbai Testnet** for development and **Polygon Mainnet** for production.
+```sh
+cp .env.example .env
+cp .env.development.example .env.development
+cp .env.production.example .env.production
+```
 
-> If you want to use other networks (eg **Ethereum Mainnet** and **Rinkeby Testnet**), edit the `config/rpcConfig.ts` file as well. Then follow the steps below to set your [Infura](https://infura.io/) key.
-> 
-> 1 . Get Infura API key: https://infura.io/
-> 
-> 2 . Copy the `.env.local.example` file to `.env.local`:
-> 
-> ```sh
-> cp .env.local.example .env.local
-> ```
-> 
-> 3 . Set your Infura KEY (PROJECT ID) to `NEXT_PUBLIC_INFURA_KEY` in `.env.local`
-> 
-> NOTE: I highly recommend setting some allowlists on the Infura dashboard to keep your Infura key secure. See the Infura doc "[Use an allowlist](https://docs.infura.io/infura/networks/ethereum/how-to/secure-a-project/use-an-allowlist)"
+Replace the values in the env files with yours as needed.
 
-> **Mumbai Testnet** and **Polygon Mainnet** can use their public RPCs, but if necessary, you can also use the dedicated RPC URLs by getting your Infura key as above.
+5 . Set up the config file:
 
-5 . Add your **ABI**:
+Replace the values in `config/contract-config.json` with yours. This file is shared with the [backend](https://github.com/kjmczk/hardhat-nft-smart-contract).
 
-Include your contract **ABI** in `config/abi.json`.
+6 . Make an allowlist (if needed):
 
-> If you deployed your contract using [Remix](https://remix.ethereum.org/), see the [Remix documentation](https://remix-ide.readthedocs.io/en/latest/run.html) for how to generate an ABI.
+Include the applicable addresses in `config/allowlist.json`.
 
-6 . Run the server:
+7 . Other settings:
+
+- Replace the images in `public/assets/` with yours
+- Replace the favicon files in `public/favicon/` with yours ([Favicon Generator](https://realfavicongenerator.net/))
+- You can change the global background color and text color in `pages/_document.tsx`
+- You can set your own default styles for specific elements in `styles/globals.css` ([Adding Custom Styles](https://tailwindcss.com/docs/adding-custom-styles)
+
+8 . Run the server:
 
 ```sh
 npm run dev
 ```
 
-## Deploy on Vercel
+## Deploy your dApp
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+- [Fleek](https://fleek.co/)
+- [Vercel](https://vercel.com/)
 
 Check out the [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
-
-> If you deploy to a hosting provider other than Vercel, I cannot guarantee that this dApp will work properly.
-
-## Connect MetaMask Mobile
-
-To connect to MetaMask on mobile, install [MetaMask Mobile](https://metamask.io/download/) on your smartphone. You can choose to use it when you want to connect your wallet in your mobile browser. If it is not installed, you will be taken to the installation page for each store.
