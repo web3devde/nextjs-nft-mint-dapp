@@ -51,7 +51,7 @@ Include the applicable addresses in `config/allowlist.json`.
 - Replace the images in `public/assets/` with yours
 - Replace the favicon files in `public/favicon/` with yours ([Favicon Generator](https://realfavicongenerator.net/))
 - You can change the global background color and text color in `pages/_document.tsx`
-- You can set your own default styles for specific elements in `styles/globals.css` ([Adding Custom Styles](https://tailwindcss.com/docs/adding-custom-styles)
+- You can set your own default styles for specific elements in `styles/globals.css` ([Adding Custom Styles](https://tailwindcss.com/docs/adding-custom-styles))
 
 8 . Run the server:
 
