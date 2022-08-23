@@ -20,7 +20,9 @@ const Home: NextPage = () => {
         <title>{nftName}</title>
       </Head>
 
-      <Image src={topImage} alt={nftName} />
+      <div className="w-full overflow-hidden">
+        <Image src={topImage} alt={nftName} layout="responsive" />
+      </div>
 
       <div className="bg-gray-800 py-16">
         <Prose>
