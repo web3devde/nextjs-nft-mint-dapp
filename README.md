@@ -1,3 +1,5 @@
+> This app is outdated, see [Customizable NFT Drop Minting Page](https://github.com/thirdweb-example/nft-drop).
+
 # [Next.js](https://nextjs.org/) NFT Mint dApp
 
 A simple, fast and modern dApp for minting NFTs.
