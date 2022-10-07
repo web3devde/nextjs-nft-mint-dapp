@@ -95,11 +95,11 @@ export default function Mint() {
   });
 
   const updateUiValues = useCallback(async () => {
-    //const saleStateFromCall = (await getSaleState()) as number;
+    const saleStateFromCall = (await getSaleState()) as number;
     const wlMintPriceFromCall = (await getWlMintPrice()) as BigNumber;
     const MintPriceFromCall = (await getPublicPrice()) as BigNumber;
     const totalSupplyFromCall = (await getTotalSupply()) as BigNumber;
-    //setSaleState(saleStateFromCall);
+    setSaleState(saleStateFromCall);
     setWlMintPrice(wlMintPriceFromCall);
     setMintPrice(MintPriceFromCall);
     setTotalSupply(totalSupplyFromCall.toNumber());
@@ -108,9 +108,7 @@ export default function Mint() {
   useEffect(() => {
     if (isWeb3Enabled && isChainIdIncluded) {
       updateUiValues();
-//      setMintPrice(BigNumber.from(1));
-     setSaleState(1);
-
+      
       // cleanup
       return () => {
         setSaleState(0);
@@ -190,15 +188,15 @@ export default function Mint() {
       <div className="border border-t-red-300 border-r-blue-300 border-b-green-300 border-l-yellow-300 rounded p-8">
         <div className="flex justify-around border-b border-gray-700 pb-8">
           <div className="space-y-1">
-            <div className="text-gray-400">Supply:</div>
+            <div className="text-gray-400 text-center">Supply</div>
             <div className="text-lg sm:text-2xl">
-              <span className="text-pink-500">{totalSupply}</span> / {maxSupply}
+              <span className="text-red-500 text-center">{totalSupply}</span> / {maxSupply}
             </div>
           </div>
 
           <div className="space-y-1">
-            <div className="text-gray-400">Sale:</div>
-            <div className="text-lg sm:text-2xl">
+            <div className="text-gray-400 text-center ">Sale Status</div>
+            <div className="text-lg text-center sm:text-2xl">
               {saleState === 0 && 'Closed'}
               {saleState === 1 && 'Allowlist Only'}
               {saleState === 2 && 'Public Open'}
@@ -268,12 +266,22 @@ export default function Mint() {
             Sales are closed now.
           </div>
         )}
+
         {isWeb3Enabled &&
           isChainIdIncluded &&
-          saleState === 1 &&
+          (saleState === 0 || saleState === 1) &&
           !isAllowlisted && (
             <div className="text-red-500 text-center mt-4">
-              Address is not allowlisted.
+              Address is not whitelisted.
+            </div>
+          )}
+
+          {isWeb3Enabled &&
+          isChainIdIncluded &&
+          saleState === 0 &&
+          isAllowlisted && (
+            <div className="text-green-500 text-center mt-4">
+              Address is whitelisted.
             </div>
           )}
       </div>

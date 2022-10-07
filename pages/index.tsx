@@ -5,6 +5,8 @@ import type { NextPage } from 'next';
 import Layout from '../components/Layout';
 import Prose from '../components/Prose';
 import Mint from '../components/Mint';
+import Faq from '../components/Faq';
+
 import contractConfig from '../config/contract-config.json';
 import BG from "../public/assets/bg.png"
 
@@ -19,6 +21,7 @@ const Home: NextPage = () => {
       <div className="py-16">
         <Prose>
           <Mint />
+          <Faq />
         </Prose>
       </div>
 
