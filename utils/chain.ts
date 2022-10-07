@@ -4,7 +4,7 @@ type ContractAddresses = {
   [key: string]: string[];
 };
 
-const { contractAddresses } = contractConfig;
+const { contractAddresses, chainIDConfig } = contractConfig;
 
 export function parseChainId(chainIdHex: string | null) {
   return parseInt(chainIdHex ?? '').toString();
@@ -17,5 +17,5 @@ export function getContractAddress(chainIdHex: string | null) {
 
 export function checkChainIdIncluded(chainIdHex: string | null) {
   const chainId = parseChainId(chainIdHex);
-  return process.env.NEXT_PUBLIC_CHAIN_ID!.split(',').includes(chainId);
+  return chainIDConfig === chainId;
 }

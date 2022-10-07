@@ -5,6 +5,10 @@ import allowlist from '../config/allowlist.json';
 
 let merkleTree: MerkleTree;
 
+function buf2hex(address: Buffer) {
+  return '0x' + address.toString('hex');
+}
+
 function getMerkleTree() {
   if (!merkleTree) {
     const leaves = allowlist.map((address) => keccak256(address));
@@ -13,8 +17,21 @@ function getMerkleTree() {
   return merkleTree;
 }
 
+export function getMerkleRoot() {
+  return buf2hex(getMerkleTree().getRoot());
+}
+
 export function getProof(address: string | null) {
-  return getMerkleTree().getHexProof(keccak256(address ?? ''));
+  const buf = keccak256((address ?? ''));
+  const tree = getMerkleTree();
+  console.log(buf2hex(tree.getRoot()));
+  const proof = tree.getProof(buf);
+  console.log(proof);
+  const retProof = proof.map(x => buf2hex(x.data));
+  console.log(retProof);
+  return retProof;
+  
+  //return getMerkleTree().getHexProof(keccak256(address ?? ''));
 }
 
 export function checkAllowlisted(address: string | null) {

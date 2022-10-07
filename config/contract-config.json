@@ -1,27 +1,30 @@
 {
-  "contractName": "MyNftCollection",
-  "nftName": "My Nft Collection",
-  "nftSymbol": "MNC",
-  "maxSupply": "10000",
+  "contractName": "Mysterious Egg",
+  "nftName": "Mysterious Egg",
+  "nftSymbol": "MSE",
+  "maxSupply": "444",
   "saleType": {
-    "allowlistSale": { "mintPrice": "0.02", "maxMintAmountPerTx": "5" },
-    "publicSale": { "mintPrice": "0.07", "maxMintAmountPerTx": "10" }
+    "allowlistSale": { "mintPrice": "0.02"},
+    "publicSale": { "mintPrice": "0.03"}
   },
+  "contractAddress" : "0x3902468bee5d9175FCff791c11C241d48364CcBe",
   "contractAddresses": {
     "1337": [],
     "4": [],
-    "1": []
+    "5": ["0x3902468bee5d9175FCff791c11C241d48364CcBe"]
   },
   "customErrors": {
-    "MyNftCollection__InvalidMintAmount": "Invalid mint amount!",
-    "MyNftCollection__MaxSupplyExceeded": "Max supply exceeded!",
-    "MyNftCollection__InsufficientFunds": "Insufficient funds!",
-    "MyNftCollection__AllowlistSaleClosed": "Allowlist sale closed!",
-    "MyNftCollection__AddressAlreadyClaimed": "Address already claimed!",
-    "MyNftCollection__InvalidProof": "Invalid proof!",
-    "MyNftCollection__PublicSaleClosed": "Public sale closed!",
-    "MyNftCollection__TransferFailed": "Transfer failed!",
-    "MyNftCollection__NonexistentToken": "Nonexistent token!"
+    "WL_MINT_IS_NOT_YET_ACTIVE": "Whitelist mint is not live or over!",
+    "PUBLIC_MINT_IS_NOT_YET_ACTIVE": "Public mint is not live yet!",
+    "PROOF_INVALID": "Invalid Whitelist Proof",
+    "NOT_ENOUGH_SUPPLY": "Max supply exceeded!",
+    "ONLY_1_IS_ALLOWED": "Can only mint 1 per wallet!",
+    "WRONG_ETH_VALUE": "Insufficient funds!"
   },
-  "gasToken": "ETH"
+  "gasToken": "ETH",
+  "openSeaURL": "www.opensea.io",
+  "twitterURL": "www.twitter.com",
+  "etherscanURL": "www.etherscan.com",
+  "chainIDConfig": "5",
+  "chainName": "MainNet"
 }

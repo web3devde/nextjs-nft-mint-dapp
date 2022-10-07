@@ -14,37 +14,15 @@ export default function Meta({ pageTitle }: Props) {
   const ogType = router.pathname === '/' ? 'website' : 'article';
   const ogTitle = pageTitle
     ? pageTitle
-    : 'An NFT collection of 10,000 unique characters';
-  const ogImage = `${process.env.NEXT_PUBLIC_SITE_URL}/assets/card-image.png`;
-  const description = `${nftName} is an NFT collection of 10,000 unique characters.`;
+    : 'An NFT collection of 444 unique eggs';
+  const ogImage = `${process.env.NEXT_PUBLIC_SITE_URL}/assets/logo.png`;
+  const description = `${nftName} is an NFT collection of 444 unique eggs.`;
 
   return (
     <Head>
       <title>{`${pageTitle} | ${nftName}`}</title>
-      <link
-        rel="apple-touch-icon"
-        sizes="180x180"
-        href="/favicon/apple-touch-icon.png"
-      />
-      <link
-        rel="icon"
-        type="image/png"
-        sizes="32x32"
-        href="/favicon/favicon-32x32.png"
-      />
-      <link
-        rel="icon"
-        type="image/png"
-        sizes="16x16"
-        href="/favicon/favicon-16x16.png"
-      />
-      <link rel="manifest" href="/favicon/site.webmanifest" />
-      <link
-        rel="mask-icon"
-        href="/favicon/safari-pinned-tab.svg"
-        color="#5bbad5"
-      />
-      <link rel="shortcut icon" href="/favicon/favicon.ico" />
+
+      <link rel="shortcut icon" href="/assets/logo.png" />
       <meta name="msapplication-TileColor" content="#ffc40d" />
       <meta name="msapplication-config" content="/favicon/browserconfig.xml" />
       <meta name="theme-color" content="#ffffff" />
