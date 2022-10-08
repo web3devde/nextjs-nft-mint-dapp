@@ -5,7 +5,7 @@
   "maxSupply": "444",
   "saleType": {
     "allowlistSale": { "mintPrice": "0.02"},
-    "publicSale": { "mintPrice": "0.03"}
+    "publicSale": { "mintPrice": "0.025"}
   },
   "contractAddress" : "0x244710a8e3be173cd8ac0db5d9944d84f98b8ac9",
   "contractAddresses": {
