@@ -110,9 +110,8 @@ export default function Mint() {
 
   useEffect(() => {
     if (isWeb3Enabled && isChainIdIncluded) {
-      updateUiValues(
-
-      )
+      updateUiValues();
+      
       // cleanup
       return () => {
         setSaleState(0);
