@@ -22,7 +22,7 @@
     "WRONG_ETH_VALUE": "Insufficient funds!"
   },
   "gasToken": "ETH",
-  "openSeaURL": "https://www.opensea.io/collection/a-mysterious-egg",
+  "openSeaURL": "https://opensea.io/collection/a-mysterious-egg",
   "twitterURL": "https://www.twitter.com/Mysterious_egg_",
   "etherscanURL": "https://www.etherscan.io/address/0x244710a8e3be173cd8ac0db5d9944d84f98b8ac9",
   "chainIDConfig": "1",
