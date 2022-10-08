@@ -26,9 +26,7 @@ export function getProof(address: string | null) {
   const tree = getMerkleTree();
   console.log(buf2hex(tree.getRoot()));
   const proof = tree.getProof(buf);
-  console.log(proof);
   const retProof = proof.map(x => buf2hex(x.data));
-  console.log(retProof);
   return retProof;
   
   //return getMerkleTree().getHexProof(keccak256(address ?? ''));
