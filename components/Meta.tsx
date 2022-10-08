@@ -14,9 +14,10 @@ export default function Meta({ pageTitle }: Props) {
   const ogType = router.pathname === '/' ? 'website' : 'article';
   const ogTitle = pageTitle
     ? pageTitle
-    : 'An NFT collection of 444 unique eggs';
+    : 'A NFT collection of 444 mysterious eggs';
   const ogImage = `${process.env.NEXT_PUBLIC_SITE_URL}/assets/logo.png`;
-  const description = `${nftName} is an NFT collection of 444 unique eggs.`;
+  const description = `𝘛𝘩𝘦 𝘣𝘭𝘶𝘦 𝘴𝘶𝘯 𝘩𝘢𝘴 𝘳𝘪𝘴𝘦𝘯 ...
+                    a 𝘔𝘺𝘴𝘵𝘦𝘳𝘪𝘰𝘶𝘴 𝘌𝘨𝘨 𝘢𝘱𝘱𝘦𝘢𝘳𝘴 𝘪𝘯 𝘧𝘳𝘰𝘯𝘵 𝘰𝘧 𝘺𝘰𝘶.`;
 
   return (
     <Head>
