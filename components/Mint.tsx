@@ -3,6 +3,9 @@ import { utils, BigNumber, ContractTransaction } from 'ethers';
 import { useMoralis, useWeb3ExecuteFunction } from 'react-moralis';
 import { useNotification, Icon, Loading } from 'web3uikit';
 import type { TIconType } from 'web3uikit/dist/components/Icon/collection';
+import Image from 'next/image';
+
+import BS from "../public/assets/logo.png";
 
 import type {
   IPosition,
@@ -107,8 +110,9 @@ export default function Mint() {
 
   useEffect(() => {
     if (isWeb3Enabled && isChainIdIncluded) {
-      updateUiValues();
-      
+      updateUiValues(
+
+      )
       // cleanup
       return () => {
         setSaleState(0);
@@ -188,7 +192,7 @@ export default function Mint() {
       <div className="border border-t-red-300 border-r-blue-300 border-b-green-300 border-l-yellow-300 rounded p-8">
         <div className="flex justify-around border-b border-gray-700 pb-8">
           <div className="space-y-1">
-            <div className="text-gray-400 text-center">Supply</div>
+            <div className="text-gray-400 text-center">Minted</div>
             <div className="text-lg sm:text-2xl">
               <span className="text-red-500 text-center">{totalSupply}</span> / {maxSupply}
             </div>
@@ -202,10 +206,12 @@ export default function Mint() {
               {saleState === 2 && 'Public Open'}
             </div>
           </div>
+          
         </div>
 
+      
         {saleState === 0 || (saleState === 1 && !isAllowlisted) ? (
-          <div className="mt-8">
+          <div className="mt-3">
             <Icon fill="#fff" size={64} svg="lockClosed" />
           </div>
         ) : (

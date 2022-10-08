@@ -1,6 +1,8 @@
 import Header from './Header';
 import Meta from './Meta';
 
+
+
 type Props = {
   children: React.ReactNode;
   pageTitle?: string;
@@ -11,7 +13,8 @@ export default function Layout({ children, pageTitle }: Props) {
     <>
       <Meta pageTitle={pageTitle} />
       <Header />
-      <main>{children}</main>
+      <main>{children}
+      </main>
     </>
   );
 }

@@ -45,11 +45,12 @@ export default function Header() {
                   <Image src={OS} height={25} width={25} />
                 </a> 
                 <a
+                  
                   href={twitterURL}
                   aria-label={`${nftName} on Twitter`}
                   rel="noopener noreferrer"
                   target="_blank"
-                  className="rounded-full p-2"
+                  className="rounded-full p-3 items-center"
                 >
                    <Icon fill="#fff" svg="twitter" />
                 </a>
