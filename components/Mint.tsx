@@ -98,11 +98,11 @@ export default function Mint() {
   });
 
   const updateUiValues = useCallback(async () => {
-    const saleStateFromCall = (await getSaleState()) as number;
+    //const saleStateFromCall = (await getSaleState()) as number;
     const wlMintPriceFromCall = (await getWlMintPrice()) as BigNumber;
     const MintPriceFromCall = (await getPublicPrice()) as BigNumber;
     const totalSupplyFromCall = (await getTotalSupply()) as BigNumber;
-    setSaleState(saleStateFromCall);
+    //setSaleState(saleStateFromCall);
     setWlMintPrice(wlMintPriceFromCall);
     setMintPrice(MintPriceFromCall);
     setTotalSupply(totalSupplyFromCall.toNumber());
@@ -111,6 +111,7 @@ export default function Mint() {
   useEffect(() => {
     if (isWeb3Enabled && isChainIdIncluded) {
       updateUiValues();
+      setSaleState(0);
       
       // cleanup
       return () => {
