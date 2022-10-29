@@ -5,10 +5,10 @@ class MyDocument extends Document {
     return (
       <Html>
         <Head />
-        <body className="h-full bg-blue-900 text-blue-300 
+        <body className="h-full text-blue-300 
         bg-[url('../public/background.png')] 
         bg-no-repeat 
-        bg-auto bg-center">
+        bg-cover bg-center">
           <Main />
           <NextScript />
         </body>
