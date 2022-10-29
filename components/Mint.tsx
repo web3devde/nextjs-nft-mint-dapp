@@ -322,7 +322,7 @@ export default function Mint() {
         )}
         {isWeb3Enabled && isChainIdIncluded && saleState === 0 && (
           <div className="text-red-500 text-center mt-4">
-            Sales are closed now.
+            Sales is not live.
           </div>
         )}
 
