@@ -219,14 +219,14 @@ export default function Mint() {
       bg-gradient-to-r from-slate-500 to-black">
         <div className="flex justify-around border-b border-gray-700 pb-8">
           <div className="space-y-1">
-            <div className="text-green-400 text-center">Minted</div>
+            <div className="text-[#fdba74] text-center">Minted</div>
             <div className="text-lg sm:text-2xl">
               <span className="text-green-500 text-center">{totalSupply}</span> / {maxSupply}
             </div>
           </div>
 
           <div className="space-y-1">
-            <div className="text-green-400 text-center ">Sale Status</div>
+            <div className="text-[#fdba74] text-center ">Sale Status</div>
             <div className="text-lg text-center sm:text-2xl">
               {saleState === 0 && 'Closed'}
               {saleState === 1 && 'Allowlist Only'}
