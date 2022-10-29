@@ -16,18 +16,7 @@ export default function Meta({ pageTitle }: Props) {
     ? pageTitle
     : 'The citizens of Ensville are living in peace and harmony.';
   const ogImage = `${process.env.NEXT_PUBLIC_SITE_URL}/assets/logo.png`;
-  const description = `REAKING NEWS!
-
-  A Mysterious storm is approaching the city! The citizens have to flee to their shelters.
-  
-  In other news, a new virus/infection is detected in neighboring city Eelcove.
-  
-  The citizens, afraid of whats coming, are glued to their radio and tv's, to listen to the last news.
-  
-  The new virus/infection seems to be airborne. Everyone needs to close their windows and ventilation shafts.
-  
-  Scientist say there is some little information about the virus/infection. People who got infected are starting to get cannibal behaviors.
-  For now there is no medication nor vaccine to fight this virus/infection.`;
+  const description = `A Mysterious storm is approaching the city! The citizens have to flee to their shelters.`;
 
   return (
     <Head>
