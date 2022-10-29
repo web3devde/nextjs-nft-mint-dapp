@@ -1,17 +1,17 @@
 {
-  "contractName": "Mysterious Egg",
-  "nftName": "Mysterious Egg",
-  "nftSymbol": "MSE",
-  "maxSupply": "444",
+  "contractName": "Day-H",
+  "nftName": "Day-H",
+  "nftSymbol": "DAYH",
+  "maxSupply": 999,
   "saleType": {
-    "allowlistSale": { "mintPrice": "0"},
-    "publicSale": { "mintPrice": "0"}
+    "allowlistSale": { "mintPrice": "0.0099"},
+    "publicSale": { "mintPrice": "0.015"}
   },
-  "contractAddress" : "0x244710a8e3be173cd8ac0db5d9944d84f98b8ac9",
+  "contractAddress" : "0xB053B8025485f0b4e359d1330cc8a7400e2272B3",
   "contractAddresses": {
     "1337": [],
     "4": [],
-    "1": ["0x244710a8e3be173cd8ac0db5d9944d84f98b8ac9"]
+    "1": ["0xB053B8025485f0b4e359d1330cc8a7400e2272B3"]
   },
   "customErrors": {
     "WL_MINT_IS_NOT_YET_ACTIVE": "Whitelist mint is not live or over!",
@@ -22,9 +22,9 @@
     "WRONG_ETH_VALUE": "Insufficient funds!"
   },
   "gasToken": "ETH",
-  "openSeaURL": "https://opensea.io/collection/a-mysterious-egg",
-  "twitterURL": "https://www.twitter.com/Mysterious_egg_",
-  "etherscanURL": "https://www.etherscan.io/address/0x244710a8e3be173cd8ac0db5d9944d84f98b8ac9",
+  "openSeaURL": "https://opensea.io/collection/dayh",
+  "twitterURL": "https://www.twitter.com/DayHnft",
+  "etherscanURL": "https://www.etherscan.io/address/0xb053b8025485f0b4e359d1330cc8a7400e2272b3",
   "chainIDConfig": "1",
   "chainName": "MainNet"
 }

@@ -4,7 +4,7 @@ import { ConnectButton, Icon } from 'web3uikit';
 
 import Container from './Container';
 import NextLink from './NextLink';
-import Logo from '../public/assets/logo.png';
+import Logo from '../public/assets/pfp.jpeg';
 import OS from "../public/assets/opensea.svg"
 import ES from "../public/assets/etherscan.png"
 import contractConfig from '../config/contract-config.json';
@@ -17,7 +17,7 @@ export default function Header() {
 
   return (
     <div className="sticky top-0 z-50">
-      <header className="bg-gray-900 border-b py-4">
+      <header className="bg-blue-900 border-b py-4">
         <Container>
           <div className="flex justify-between items-center">
             <NextLink href="/" className="text-2xl font-bold text-white">

@@ -3,9 +3,9 @@ import { utils, BigNumber, ContractTransaction } from 'ethers';
 import { useMoralis, useWeb3ExecuteFunction } from 'react-moralis';
 import { useNotification, Icon, Loading } from 'web3uikit';
 import type { TIconType } from 'web3uikit/dist/components/Icon/collection';
-import Image from 'next/image';
 
-import BS from "../public/assets/logo.png";
+import { IconContext } from 'react-icons';
+import { FaMinusCircle, FaPlusCircle } from 'react-icons/fa';
 
 import type {
   IPosition,
@@ -27,6 +27,8 @@ export default function Mint() {
   const { isWeb3Enabled, account: account, chainId: chainIdHex } = useMoralis();
 
   const isAllowlisted = checkAllowlisted(account);
+
+  const [mintAmount, setMintAmount] = useState(1);
   
   const proof = getProof(account);
   const contractAddress = getContractAddress(chainIdHex);
@@ -35,7 +37,7 @@ export default function Mint() {
   const [saleState, setSaleState] = useState(0);
   const [wlMintPrice, setWlMintPrice] = useState(BigNumber.from(0));
   const [mintPrice, setMintPrice] = useState(BigNumber.from(0));
-
+  const [publicMintLimit, setPublicMintLimit] = useState(0);
   const [totalSupply, setTotalSupply] = useState(0);
  
   const dispatch = useNotification();
@@ -48,12 +50,14 @@ export default function Mint() {
   } = useWeb3ExecuteFunction({
     abi: ABI,
     contractAddress: contractAddress,
-    functionName: 'hatchAllowedEgg',
+    functionName: 'allowMint',
     params: {
+      numberOfTokens:mintAmount, 
       proof: proof,
     },
     msgValue: utils
       .parseEther(saleType.allowlistSale.mintPrice)
+      .mul(mintAmount)
       .toString(),
   });
 
@@ -65,18 +69,20 @@ export default function Mint() {
   } = useWeb3ExecuteFunction({
     abi: ABI,
     contractAddress: contractAddress,
-    functionName: 'hatchPublicEgg',
+    functionName: 'publicMint',
     params: {
+      numberOfTokens:mintAmount,
     },
     msgValue: utils
       .parseEther(saleType.publicSale.mintPrice)
+      .mul(mintAmount)
       .toString(),
   });
 
-  const { fetch: getSaleState } = useWeb3ExecuteFunction({
+  const { fetch: getMintingState } = useWeb3ExecuteFunction({
     abi: ABI,
     contractAddress: contractAddress,
-    functionName: 'getSaleState',
+    functionName: 'getMintingState',
   });
 
   const { fetch: getPublicPrice } = useWeb3ExecuteFunction({
@@ -85,10 +91,10 @@ export default function Mint() {
     functionName: 'getPublicPrice',
   });
 
-  const { fetch: getWlMintPrice } = useWeb3ExecuteFunction({
+  const { fetch: getWlPrice } = useWeb3ExecuteFunction({
     abi: ABI,
     contractAddress: contractAddress,
-    functionName: 'getWlMintPrice',
+    functionName: 'getWlPrice',
   });
 
   const { fetch: getTotalSupply } = useWeb3ExecuteFunction({
@@ -97,21 +103,30 @@ export default function Mint() {
     functionName: 'totalSupply',
   });
 
+  const { fetch: getPublicMintLimit } = useWeb3ExecuteFunction({
+    abi: ABI,
+    contractAddress: contractAddress,
+    functionName: 'getPublicMintLimit',
+  });
+
   const updateUiValues = useCallback(async () => {
-    const saleStateFromCall = (await getSaleState()) as number;
-    const wlMintPriceFromCall = (await getWlMintPrice()) as BigNumber;
+    const saleStateFromCall = (await getMintingState()) as number;
+    //const wlMintPriceFromCall = (await getWlPrice()) as BigNumber;
     const MintPriceFromCall = (await getPublicPrice()) as BigNumber;
     const totalSupplyFromCall = (await getTotalSupply()) as BigNumber;
+    const publicMintLimitFromCall = (await getPublicMintLimit()) as number;
+     
     setSaleState(saleStateFromCall);
-    setWlMintPrice(wlMintPriceFromCall);
+    //setWlMintPrice(wlMintPriceFromCall);
     setMintPrice(MintPriceFromCall);
     setTotalSupply(totalSupplyFromCall.toNumber());
-  }, [getPublicPrice, getWlMintPrice, getSaleState, getTotalSupply]);
+    setPublicMintLimit(publicMintLimitFromCall);
+  }, [getPublicPrice, getWlPrice, getMintingState, getTotalSupply, getPublicMintLimit]);
 
   useEffect(() => {
     if (isWeb3Enabled && isChainIdIncluded) {
       updateUiValues();
-      
+      //setSaleState(1);
       // cleanup
       return () => {
         setSaleState(0);
@@ -185,30 +200,44 @@ export default function Mint() {
     }
   }
 
+  function decrementMintAmount() {
+    if (mintAmount > 1) {
+      setMintAmount(mintAmount - 1);
+    }
+  }
+
+  function incrementMintAmount() {
+    if (mintAmount < publicMintLimit) {
+      setMintAmount(mintAmount + 1);
+    }
+  }
+
   return (
     <>
 
-      <div className="border border-t-red-300 border-r-blue-300 border-b-green-300 border-l-yellow-300 rounded p-8">
+      <div className="border border-t-red-300 border-r-blue-300 border-b-green-300 border-l-yellow-300 rounded p-20
+      bg-gradient-to-r from-slate-500 to-black">
         <div className="flex justify-around border-b border-gray-700 pb-8">
           <div className="space-y-1">
-            <div className="text-gray-400 text-center">Minted</div>
+            <div className="text-green-400 text-center">Minted</div>
             <div className="text-lg sm:text-2xl">
-              <span className="text-red-500 text-center">{totalSupply}</span> / {maxSupply}
+              <span className="text-green-500 text-center">{totalSupply}</span> / {maxSupply}
             </div>
           </div>
 
           <div className="space-y-1">
-            <div className="text-gray-400 text-center ">Sale Status</div>
+            <div className="text-green-400 text-center ">Sale Status</div>
             <div className="text-lg text-center sm:text-2xl">
               {saleState === 0 && 'Closed'}
               {saleState === 1 && 'Allowlist Only'}
               {saleState === 2 && 'Public Open'}
+              {totalSupply === maxSupply && 'SOLD OUT'}
             </div>
           </div>
           
         </div>
 
-      
+   
         {saleState === 0 || (saleState === 1 && !isAllowlisted) ? (
           <div className="mt-3">
             <Icon fill="#fff" size={64} svg="lockClosed" />
@@ -216,20 +245,45 @@ export default function Mint() {
         ) : (
           <div className="pt-8 space-y-4">  
 
-            
               {saleState === 1 ? (
                 <div className="text-center text-lg">
-              <span className="text-gray-400">Price:</span>{' '}
-              {utils.formatEther(wlMintPrice)} {gasToken}
+              <span className="text-cyan-200">Price:</span>{' '}
+              {0.0099} {gasToken}
               </div>
               ) : (
                 <div className="text-center text-lg">
-                <span className="text-gray-400">Price:</span>{' '}
+                <span className="text-cyan-400">Price:</span>{' '}
               {utils.formatEther(mintPrice)} {gasToken}
               </div>
               )}
             
-
+            {saleState === 2 ? (
+            <div className="flex justify-center items-center space-x-4">
+            <IconContext.Provider value={{ size: '1.5em' }}>
+              <button
+                type="button"
+                className={
+                  mintAmount === 1 ? 'text-gray-500 cursor-default' : ''
+                }
+                onClick={decrementMintAmount}
+                disabled={false}
+              >
+                <FaMinusCircle />
+              </button>
+              <span className="text-xl">{mintAmount}</span>
+              <button
+                type="button"
+                className={
+                  mintAmount === 2 ? 'text-gray-500 cursor-default' : ''
+                }
+                onClick={incrementMintAmount}
+                disabled={false}
+              >
+                <FaPlusCircle />
+              </button>
+            </IconContext.Provider>
+          </div>
+            ) : (<div className="flex justify-center items-center space-x-4"> </div>)}
             <div>
               {isFetchingAM || isLoadingAM || isFetchingPM || isLoadingPM ? (
                 <button
