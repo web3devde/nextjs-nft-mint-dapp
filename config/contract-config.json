@@ -14,11 +14,13 @@
     "1": ["0xB053B8025485f0b4e359d1330cc8a7400e2272B3"]
   },
   "customErrors": {
-    "WL_MINT_IS_NOT_YET_ACTIVE": "Whitelist mint is not live or over!",
-    "PUBLIC_MINT_IS_NOT_YET_ACTIVE": "Public mint is not live yet!",
+    "WL_SALE_NOT_ACTIVE": "Whitelist mint is not live or over!",
+    "PUBLIC_SALE_NOT_ACTIVE": "Public mint is not live yet!",
     "PROOF_INVALID": "Invalid Whitelist Proof",
     "NOT_ENOUGH_SUPPLY": "Max supply exceeded!",
+    "EXCEED_WL_MINT_LIMIT": "Whitelist limit already minted for wallet!",
     "ONLY_1_IS_ALLOWED": "Can only mint 1 per wallet!",
+    "ONLY_2_IS_ALLOWED": "Can only mint 2 per wallet!",
     "WRONG_ETH_VALUE": "Insufficient funds!"
   },
   "gasToken": "ETH",
