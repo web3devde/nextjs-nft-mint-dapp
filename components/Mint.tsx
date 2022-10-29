@@ -116,7 +116,7 @@ export default function Mint() {
     const totalSupplyFromCall = (await getTotalSupply()) as BigNumber;
     const publicMintLimitFromCall = (await getPublicMintLimit()) as number;
      
-    setSaleState(saleStateFromCall);
+    //setSaleState(saleStateFromCall);
     //setWlMintPrice(wlMintPriceFromCall);
     setMintPrice(MintPriceFromCall);
     setTotalSupply(totalSupplyFromCall.toNumber());
@@ -126,7 +126,7 @@ export default function Mint() {
   useEffect(() => {
     if (isWeb3Enabled && isChainIdIncluded) {
       updateUiValues();
-      //setSaleState(1);
+      setSaleState(2);
       // cleanup
       return () => {
         setSaleState(0);
@@ -253,7 +253,7 @@ export default function Mint() {
               ) : (
                 <div className="text-center text-lg">
                 <span className="text-cyan-400">Price:</span>{' '}
-              {utils.formatEther(mintPrice)} {gasToken}
+              {0.0099} {gasToken}
               </div>
               )}
             
