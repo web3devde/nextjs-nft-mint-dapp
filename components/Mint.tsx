@@ -116,7 +116,7 @@ export default function Mint() {
     const totalSupplyFromCall = (await getTotalSupply()) as BigNumber;
     const publicMintLimitFromCall = (await getPublicMintLimit()) as number;
      
-    setSaleState(saleStateFromCall);
+    //setSaleState(saleStateFromCall);
     //setWlMintPrice(wlMintPriceFromCall);
     setMintPrice(MintPriceFromCall);
     setTotalSupply(totalSupplyFromCall.toNumber());
@@ -126,7 +126,7 @@ export default function Mint() {
   useEffect(() => {
     if (isWeb3Enabled && isChainIdIncluded) {
       updateUiValues();
-      //setSaleState(2);
+      setSaleState(0);
       // cleanup
       return () => {
         setSaleState(0);
@@ -231,7 +231,6 @@ export default function Mint() {
               {saleState === 0 && 'Closed'}
               {saleState === 1 && 'Allowlist Only'}
               {saleState === 2 && 'Public Open'}
-              {totalSupply === maxSupply && 'SOLD OUT'}
             </div>
           </div>
           
