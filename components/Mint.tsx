@@ -248,12 +248,12 @@ export default function Mint() {
               {saleState === 1 ? (
                 <div className="text-center text-lg">
               <span className="text-cyan-200">Price:</span>{' '}
-              {0.0099} {gasToken}
+              {0} {gasToken}
               </div>
               ) : (
                 <div className="text-center text-lg">
                 <span className="text-cyan-400">Price:</span>{' '}
-              {0.0099} {gasToken}
+              {0} {gasToken}
               </div>
               )}
             

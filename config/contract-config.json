@@ -4,8 +4,8 @@
   "nftSymbol": "DAYH",
   "maxSupply": 999,
   "saleType": {
-    "allowlistSale": { "mintPrice": "0.0099"},
-    "publicSale": { "mintPrice": "0.0099"}
+    "allowlistSale": { "mintPrice": "0"},
+    "publicSale": { "mintPrice": "0"}
   },
   "contractAddress" : "0xB053B8025485f0b4e359d1330cc8a7400e2272B3",
   "contractAddresses": {
